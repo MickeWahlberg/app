@@ -1,0 +1,73 @@
+#submit-button{
+	width: 100px;
+    height:100px;
+    padding-left: auto;
+    padding-right: auto;
+}
+
+.container{
+	margin-right:auto;
+	margin-left:auto;
+	margin-top: auto;
+	margin-bottom: auto;
+	//padding-left:35px;
+	//padding-right:35px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	width:970px;
+	height: auto;
+	background-color: #D3D3D3;
+	border: solid;
+	border-width: 1px;
+	border-color: #000000;
+}
+
+.headlist{
+	width: auto;
+	height: 50px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: #FFFFFF
+}
+
+.jumbotron{
+	margin-right:100px;
+	margin-left:100px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding-left:15px;
+	padding-right:15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	width:auto;
+	height: auto;
+	background-color: #FFFFFF;	
+}
+
+.headbutton{
+	
+}
+
+/*@media 
+(min-width:768px){
+	.container{
+		width:750px
+		}
+		}
+		@media (min-width:992px){
+			.container{
+				width:970px
+				}
+				}
+				@media 
+				(min-width:1200px){
+					.container{
+						width:1170px}
+						}.container-fluid{
+							margin-right:auto;
+							margin-left:auto;
+							padding-left:15px;
+							padding-right:15px
+						}*/

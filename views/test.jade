@@ -1,0 +1,37 @@
+html
+  head
+    meta(charset='UTF-8')
+    title=title
+    link(rel='stylesheet prefetch', href='http://fonts.googleapis.com/css?family=Noto+Sans:700')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    include header
+
+    div.container
+      div.jumbotron
+        h1 Hello!
+ 
+        if user
+          p Welcome, #{user.fullName}
+          p
+            a.small(href="profile") Edit my profile
+          form(action='/logout', method='POST')
+            button.btn.btn-default(type="submit") Logout
+        else
+          p Welcome to my app, ready to get started?
+          p
+            a.btn.btn-primary(href="/login") Login now
+          p
+            span.small Don't have an account?
+            span &nbsp;
+            a.small(href="/register") Register now
+          
+          p TJENA!!!! JAG äR GAY :)
+        div.separator
+      div.jumbotron
+        div.popup
+          p HEJ!
+        button(class='testAjax') Print HelloWorld!
+        div.separator
+  script(src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js').
+  script(src='/javascripts/script.js').

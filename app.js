@@ -1,5 +1,5 @@
 var express = require('express');
-var stormpath = require('express-stormpath');
+//var stormpath = require('express-stormpath');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -34,20 +34,20 @@ app.use('/users', users);
 app.use('/garch', garch);
 
 // Stormpath will let you know when it's ready to start authenticating users.
-app.on('stormpath.ready', function () {
-  console.log('Stormpath Ready!');
-});
+//app.on('stormpath.ready', function () {
+ // console.log('Stormpath Ready!');
+//});
 
-app.use(stormpath.init(app, {
- client: {
-    apiKey: {
-      file: '~/.stormpath/apiKey-2Z935FTTKBV65ZJDF0KJW4HFG.properties'
-    }
- },
- application: {
-   href: 'https://api.stormpath.com/v1/applications/6Ocl8DT1iVJrxzSf8qJ53R',
- }
-}));
+//app.use(stormpath.init(app, {
+// client: {
+//    apiKey: {
+//      file: '~/.stormpath/apiKey-2Z935FTTKBV65ZJDF0KJW4HFG.properties'
+//    }
+// },
+// application: {
+//   href: 'https://api.stormpath.com/v1/applications/6Ocl8DT1iVJrxzSf8qJ53R',
+// }
+//}));
 
 
 

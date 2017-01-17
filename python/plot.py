@@ -3,6 +3,7 @@ import sys
 from YahooDataFetcher import YahooDataFetcher
 import datetime
 import time
+import os
 
 startDate = map(int, str(sys.argv[2]).split('-'))
 endDate = map(int, str(sys.argv[3]).split('-'))
@@ -11,9 +12,9 @@ end = datetime.datetime(endDate[0], endDate[1], endDate[2])
 asset = sys.argv[1]
 sucess = False
 millis = int(round(time.time() * 1000))
-filePath = '/Users/mikaelwahlberg/Projects/Node/app/public/images/plot_' + str(millis) + '.png'
+imagesFolderPath = os.path.abspath("../app/public/images")
+filePath = imagesFolderPath + '/plot_' + str(millis) + '.png'
 quickPath = '/images/plot_' + str(millis) + '.png'
-
 try:
 	data = YahooDataFetcher(str(sys.argv[1]), 'yahoo', start, end)
 	ts = data.get_adj_close_time_series_data()

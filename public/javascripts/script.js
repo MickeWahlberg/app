@@ -106,6 +106,6 @@ function startDateBeforeEndDate(startDate, endDate) {
     var endDay     = parseInt(endParts[2], 10);
     var endMonth   = parseInt(endParts[1], 10);
     var endYear    = parseInt(endParts[0], 10);
-
-    return (endYear + endMonth + endDay) > (startYear + startMonth + startDay);
+   
+    return (endYear + endMonth/12 + endDay/365) > (startYear + startMonth/12 + startDay/365);
 };

@@ -1,5 +1,6 @@
 body{
-	font-family: 'lato', sans-serif;
+	//font-family: 'lato', sans-serif;
+	font-family: "Computer Modern Sans", sans-serif;
 	margin:0;
 	width:100%;
 	height:100vh;
@@ -18,7 +19,8 @@ input[type="text"] {
   display: block;
   margin: 0;
   width: 100%;
-  font-family: "Open Sans", sans-serif;
+  //font-family: "Open Sans", sans-serif;
+  font-family: "Computer Modern Sans", sans-serif;
   font-size: 18px;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -76,9 +78,9 @@ ul.input-list li {
   margin-top: 5px;
   margin-bottom: 5px;
   padding-top: 5px;
-  padding-bottom:5px;
+  padding-bottom:10px;
   width:970px;
-  height: 100%;
+  height: auto;
   background-color: #fff;
 }
 
@@ -137,21 +139,19 @@ display:none;
 	width:100%; 
 	background:#fff;
 	border-top: 1px solid #DCDCDC; 
-	height:120px; 
+	height:90px; 
 	line-height:60px;
 }
 .footeritem{
+	text-align: center;
 	width: auto;
-	margin-left: 40%;
 	height: 100%;
 	top:0;
-	right:45;
 }.footeritem p{
 	font-weight: lighter;
 	font-style: italic;
-	font-size: 12px;
+	font-size: 14px;
 	color: #808080;
-	padding-top:25px;
 }
 
 @media

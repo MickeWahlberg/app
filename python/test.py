@@ -1,8 +1,18 @@
- #!/usr/bin/python2.7.12
-import os
+import numpy as np
+def kahan_range(start, stop, step):
+    assert step > 0.0
+    total = start
+    compo = 0.0
+    while total < stop:
+        yield total
+        y = step - compo
+        temp = total + y
+        compo = (temp - total) - y
+        total = temp
+        print total
 
-filePath = os.path.dirname(os.path.abspath(__file__))
-print str(filePath)
-print os.path.abspath("../public/images")
+#print list(kahan_range(1, 100, 0.01))[-1]
 
-
+for i in np.arange(0,1,0.1):
+	print i
+	

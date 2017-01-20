@@ -36,7 +36,7 @@ $( "#calculate" ).click(function() {
 
 function callbackFunc(response) {
 	var responseMessage = response[0];
-	if (response[1] == 'False') {
+	if (response.length > 1) {
 		$( ".popup" ).show();
 		$( ".popup img" ).hide();
 		$( ".popup p" ).show();

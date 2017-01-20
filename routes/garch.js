@@ -12,11 +12,11 @@ router.post('/python', function(req, res){
 	var options = {
   		mode: 'text',
   		pythonOptions: ['-u'],
-  		scriptPath: './python',
+  		scriptPath: './python/quant/garch/',
   		args: [req.body.t, req.body.s, req.body.e]
 	};
  
-	PythonShell.run('plot.py', options, function (err, results) {
+	PythonShell.run('garch.py', options, function (err, results) {
   		if (err) throw err;
   		console.log('results: %j', results);
   		console.log(results[1]);

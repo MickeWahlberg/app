@@ -45,7 +45,8 @@ def main():
 		timeS = fetchData(asset, start1, end1)
 		logReturns = calculateLogReturns(timeS)
 		normalizedLogReturns = logReturns - np.mean(logReturns)
-		vs = garch(garchParams[0], garchParams[1], garchParams[2], logReturns)
+		vs = np.sqrt(garch(garchParams[0], garchParams[1], garchParams[2], logReturns))
+		vs = np.multiply(vs, np.sqrt(252))
 		plot(vs, filePath)
 		print(quickPath)
 	except Exception as e:

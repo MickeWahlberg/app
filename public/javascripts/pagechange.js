@@ -2,9 +2,9 @@
 //Trigger a click on item with id: test1
 //$("#test1").trigger("click");
 
-var text1 = "The generalized autoregressive conditional heteroskedasticity (GARCH) process is an econometric term that describes an approach to estimate volatility in financial markets. The GARCH process is often preferred by financial modeling professionals because it provides a more real-world context than other forms when trying to predict the prices and rates of financial instruments."
-var text2 = "TESTAR BYTA PAGE"
-var text3 = "HEJ MAJA DU LUKTAR BAJS HAHAHAHAHAHAH :D <3 <3 <3 <3 <3 FINIS!"
+var text1 = "Calibrate the Garch parameters and plot how the volatility model would have evolved on a given backtest period."
+var text2 = "Compare 1000 day historical Value at Risk(VaR) against Garch. To see what method is preferable, look how often VaR/Garch is breached by the negative return bars"
+var text3 = "Make a daily Garch forecast. This is forcasted with the assumption of normally distributed returns. Note that each run will generate different results."
 var currentMethod = "";
 
 $(document).ready(function() {
@@ -18,6 +18,8 @@ $( ".btnList" ).click(function(e) {
 	$('.btnList').not(this).removeClass('active');
     $(this).toggleClass('active');
     e.preventDefault();
+    $( ".popup" ).hide();
+
 
 	if(this.id == 'test1') {
 		showGarch1("slow")

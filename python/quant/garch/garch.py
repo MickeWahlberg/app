@@ -18,6 +18,7 @@ global success
 
 def main():
 	#NECESSARY DATA
+	days = None
 	startDate = map(int, str(sys.argv[2]).split('-'))
 	endDate = map(int, str(sys.argv[3]).split('-'))
 	start = datetime.datetime(startDate[0], startDate[1], startDate[2])
@@ -35,8 +36,12 @@ def main():
 	imagesFolderPath = os.path.abspath("public/images")
 	filePath = imagesFolderPath + '/plot_' + str(millis) + '.png'
 	quickPath = '/images/plot_' + str(millis) + '.png'
-	
 
+	if (method == "garch3"):
+		days = int(sys.argv[7])
+		backStartDate = datetime.datetime(backStart[0] - 1, backStart[1], backStart[2])
+	
+	# CALIBRATE GARCH PARAMS
 	timeSeries = fetchData(asset, start, end)
 	try:
 		logReturnsCal = calculateLogReturns(timeSeries)
@@ -48,35 +53,56 @@ def main():
 	except Exception as e:
 		print "Could not calculate garch params"
 
+	# CALCULATE GARCH1, GARCH2 OR GARCH 3
 	try:
 		timeS = fetchData(asset, backStartDate, backEndDate)
 		logReturns = calculateLogReturns(timeS)
-		normalizedLogReturns = logReturns - np.mean(logReturns)
-		vs = np.sqrt(garch(garchParams[0], garchParams[1], garchParams[2], logReturns))
-		
+		normalizedLogReturns = np.subtract(logReturns, np.mean(logReturns))
+		volatilities = np.sqrt(garch(garchParams[0], garchParams[1], garchParams[2], normalizedLogReturns))
 
 		if(method == "garch1"):
-			vs = np.multiply(vs, np.sqrt(252))
-			plot(vs, filePath)
+			garch1(volatilities, filePath)
 		elif(method == "garch2"):
-			varStart = datetime.datetime(backStart[0] - 6, backStart[1], backStart[2])
-			varTimeSeries = fetchData(asset, varStart, backEndDate)
-			varReturns = calculateReturns(varTimeSeries)
-			normalReturns = calculateReturns(timeS)
-			var1000Day = calculateVaR1000Day(len(normalReturns), varReturns, 99)
-			varPlot(np.multiply(normalReturns, -1), var1000Day, np.multiply(vs, norm.ppf(0.99)), filePath)
-
-		print(quickPath)
+			garch2(backStart, asset, backEndDate, timeS, volatilities, filePath)
+		else:
+			garch3(volatilities, garchParams, days, filePath)
 	except Exception as e:
-		print "Could not calculate garch"
+		print "Could not calculate garch."
+
+	print(quickPath)
+
+
+def garch1(volatilities, filePath):
+	vs = np.multiply(volatilities, np.sqrt(252))
+	plot(vs, filePath)
+
+def garch2(backStart, asset, backEndDate, timeS, vs, filePath):
+	varStart = datetime.datetime(backStart[0] - 6, backStart[1], backStart[2])
+	varTimeSeries = fetchData(asset, varStart, backEndDate)
+	varReturns = calculateLogReturns(varTimeSeries)
+	normalReturns = calculateLogReturns(timeS)
+	var1000Day = calculateVaR1000Day(len(normalReturns), varReturns, 99)
+	varPlot(np.multiply(normalReturns, -1), var1000Day, np.multiply(vs, norm.ppf(0.99)), filePath)
+
+def garch3(vs, garchParams, days, filePath):
+	volatility = vs[-1]
+	variances = []
+	randReturns = np.random.normal(0,1, days)
+
+	for i in range(0, days):
+		yGarch = volatility * randReturns[i]
+		variance = garchParams[0] * np.power(yGarch, 2) + garchParams[1] * np.power(volatility, 2) + garchParams[2]
+		volatility = np.sqrt(variance)
+		variances.append(variance)
+	plot(np.sqrt(variances), filePath)
 
 
 def calculateVaR1000Day(length, varReturns, confidenceLevel):
 	returns = np.asarray(varReturns)
 	var1000Day = []
-	varCalculator = VaRCalculator(returns[0 : (len(returns) - length)], confidenceLevel)
+	varCalculator = VaRCalculator(returns[:(len(returns) - length)], confidenceLevel)
 	for i in range(0, length):
-		varCalculator.returns = returns[0 : (len(returns) + i - length)]
+		varCalculator.returns = returns[:(len(returns) + i - length)]
 		var1000Day.append(varCalculator.getThousandDayVaR())
 	return var1000Day
 

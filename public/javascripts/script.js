@@ -26,20 +26,38 @@ $( "#calculate" ).click(function() {
 		var endDate = $('input[name=calEnd1]').val();
 		var backStart = $('input[name=backStart1]').val();
 		var backEnd = $('input[name=backEnd1]').val();
+		garch(ticker, startDate, endDate, backStart, backEnd)
 	}else if(currentMethod == "garch2") {
 		var ticker = $('input[name=ticker2]').val();
 		var startDate = $('input[name=calStart2]').val();
 		var endDate = $('input[name=calEnd2]').val();
 		var backStart = $('input[name=backStart2]').val();
 		var backEnd = $('input[name=backEnd2]').val();
+		garch(ticker, startDate, endDate, backStart, backEnd)
 	} else{
+		var ticker = $('input[name=ticker3]').val();
 		var startDate = $('input[name=calStart3]').val();
 		var endDate = $('input[name=calEnd3]').val();
-		var backStart = $('input[name=backStart3]').val();
-		var backEnd = $('input[name=backEnd3]').val();
+		var forecastDate = $('input[name=forecastStart]').val();
+		var days = $('input[name=forecastDays]').val();
+		forecastGarch(ticker, startDate, endDate, forecastDate, days)
 	}
 
+});
 
+function forecastGarch(ticker, startDate, endDate, forecastStart, days) {
+	if (validateDate(startDate, endDate)) {
+				$('.loading').show();
+		$.ajax({
+		        type: "POST",
+		        url: "garch/forecast",
+		        data: {t: ticker, s: startDate, e: endDate, bs:forecastStart, be:forecastStart, method: currentMethod, d: days},
+		        success: callbackFunc
+		});
+	}
+}
+
+function garch(ticker, startDate, endDate, backStart, backEnd) {
 	if (validateDate(startDate, endDate) && validateDate(backStart, backEnd)) {
 		$('.loading').show();
 		$.ajax({
@@ -49,7 +67,7 @@ $( "#calculate" ).click(function() {
 		        success: callbackFunc
 		});
 	};
-});
+}
 
 function callbackFunc(response) {
 	var responseMessage = response[0];

@@ -10,6 +10,8 @@ import numpy as np
 import os
 from TimeSerieConverter import TimeSerieConverter
 from CalibrateGarchParams import CalibrateGarchParams
+from VaRCalculator import VaRCalculator
+from scipy.stats import norm
 
 
 global success
@@ -20,7 +22,14 @@ def main():
 	endDate = map(int, str(sys.argv[3]).split('-'))
 	start = datetime.datetime(startDate[0], startDate[1], startDate[2])
 	end = datetime.datetime(endDate[0], endDate[1], endDate[2])
+
+	backStart = map(int, str(sys.argv[4]).split('-'))
+	backEnd = map(int, str(sys.argv[5]).split('-'))
+	backStartDate = datetime.datetime(backStart[0], backStart[1], backStart[2])
+	backEndDate = datetime.datetime(backEnd[0], backEnd[1], backEnd[2])
+
 	asset = sys.argv[1]
+	method = sys.argv[6]
 	success = False
 	millis = int(round(time.time() * 1000))
 	imagesFolderPath = os.path.abspath("public/images")
@@ -40,24 +49,37 @@ def main():
 		print "Could not calculate garch params"
 
 	try:
-		start1 = datetime.datetime(2012, 01, 01)
-		end1 = datetime.datetime(2015,12,31)
-		timeS = fetchData(asset, start1, end1)
+		timeS = fetchData(asset, backStartDate, backEndDate)
 		logReturns = calculateLogReturns(timeS)
 		normalizedLogReturns = logReturns - np.mean(logReturns)
 		vs = np.sqrt(garch(garchParams[0], garchParams[1], garchParams[2], logReturns))
-		vs = np.multiply(vs, np.sqrt(252))
-		plot(vs, filePath)
+		
+
+		if(method == "garch1"):
+			vs = np.multiply(vs, np.sqrt(252))
+			plot(vs, filePath)
+		elif(method == "garch2"):
+			varStart = datetime.datetime(backStart[0] - 6, backStart[1], backStart[2])
+			varTimeSeries = fetchData(asset, varStart, backEndDate)
+			varReturns = calculateReturns(varTimeSeries)
+			normalReturns = calculateReturns(timeS)
+			var1000Day = calculateVaR1000Day(len(normalReturns), varReturns, 99)
+			varPlot(np.multiply(normalReturns, -1), var1000Day, np.multiply(vs, norm.ppf(0.99)), filePath)
+
 		print(quickPath)
 	except Exception as e:
 		print "Could not calculate garch"
-	#print vs
-	#print len(vs)
-	#garchParams = calGarchParams.getGarchParams
-	#print garchParams
-	#variances = calGarchParams.getVariances
-	#print variances
-	#plot(timeSeries, filePath)
+
+
+def calculateVaR1000Day(length, varReturns, confidenceLevel):
+	returns = np.asarray(varReturns)
+	var1000Day = []
+	varCalculator = VaRCalculator(returns[0 : (len(returns) - length)], confidenceLevel)
+	for i in range(0, length):
+		varCalculator.returns = returns[0 : (len(returns) + i - length)]
+		var1000Day.append(varCalculator.getThousandDayVaR())
+	return var1000Day
+
 
 def garch(a, b, w, y):
 	try:
@@ -91,6 +113,26 @@ def calculateLogReturns(timeSeries):
 	except Exception as e:
 		print "Could not convert prices to returns."
 	
+def varPlot(timeSeries,var, garch, filePath):
+	try:
+		arr = np.asarray(timeSeries)
+		arr2 = np.asarray(garch)
+		arr3 = np.asarray(var)
+		plt.bar(range(len(arr)), arr)
+		plt.hold(True)
+		plt.plot(arr2)
+		plt.hold(True)
+		plt.plot(arr3)
+		plt.savefig(filePath)
+	except Exception as e:
+		print "Failed to save the plot, please try again soon."
+
+def calculateReturns(timeSeries):
+	try:
+		tSC = TimeSerieConverter(timeSeries)
+		return tSC.getNormalReturns(1, len(timeSeries))
+	except Exception as e:
+		print "Could not convert prices to returns."
 
 def plot(timeSeries, filePath):
 	try:

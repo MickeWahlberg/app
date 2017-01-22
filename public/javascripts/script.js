@@ -19,16 +19,33 @@ $( ".hamburger" ).show();
 // CALCULATE BUTTON
 $( "#calculate" ).click(function() {
 
-	var ticker = $('input[name=ticker]').val();
-	var startDate = $('input[name=startDate]').val();
-	var endDate = $('input[name=endDate]').val();
 
-	if (validateDate(startDate, endDate)) {
+	if (currentMethod == "garch1"){
+		var ticker = $('input[name=ticker1]').val();
+		var startDate = $('input[name=calStart1]').val();
+		var endDate = $('input[name=calEnd1]').val();
+		var backStart = $('input[name=backStart1]').val();
+		var backEnd = $('input[name=backEnd1]').val();
+	}else if(currentMethod == "garch2") {
+		var ticker = $('input[name=ticker2]').val();
+		var startDate = $('input[name=calStart2]').val();
+		var endDate = $('input[name=calEnd2]').val();
+		var backStart = $('input[name=backStart2]').val();
+		var backEnd = $('input[name=backEnd2]').val();
+	} else{
+		var startDate = $('input[name=calStart3]').val();
+		var endDate = $('input[name=calEnd3]').val();
+		var backStart = $('input[name=backStart3]').val();
+		var backEnd = $('input[name=backEnd3]').val();
+	}
+
+
+	if (validateDate(startDate, endDate) && validateDate(backStart, backEnd)) {
 		$('.loading').show();
 		$.ajax({
 		        type: "POST",
 		        url: "garch/python",
-		        data: {t: ticker, s: startDate, e: endDate},
+		        data: {t: ticker, s: startDate, e: endDate, bs: backStart, be:backEnd, method: currentMethod},
 		        success: callbackFunc
 		});
 	};

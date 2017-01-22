@@ -17,18 +17,53 @@ html
           li
             h1 Garch
           li
-            p The generalized autoregressive conditional heteroskedasticity (GARCH) process is an econometric term that describes an approach to estimate volatility in financial markets. The GARCH process is often preferred by financial modeling professionals because it provides a more real-world context than other forms when trying to predict the prices and rates of financial instruments.
+            button(class="btnlist btn-1 btn-1a", id='test1', class='btnList') Backtest Garch
+            button(class="btnlist btn-1 btn-1a", id='test2', class='btnList') Garch/VaR
+            button(class="btnlist btn-1 btn-1a", id='test3', class='btnList') Forecast Garch
+          li
+            div.description
+              p The generalized autoregressive conditional heteroskedasticity (GARCH) process is an econometric term that describes an approach to estimate volatility in financial markets. The GARCH process is often preferred by financial modeling professionals because it provides a more real-world context than other forms when trying to predict the prices and rates of financial instruments.
 
       div.jumbotron
-        ul(class="input-list style-1 clearfix")
-          li
-            input(type="text", name='ticker', placeholder=":ticker")
-          li
-            input(type="text", name='startDate', placeholder=":start date (yyyy-mm-dd)")
-          li
-            input(type="text", name='endDate', placeholder=":end date (yyyy-mm-dd)")
-          li
-            button(class="btn btn-1 btn-1a", id='calculate') Calculate
+        div.garch
+          ul(class="input-list style-1 clearfix")
+
+            // GARCH 1 ITEMS
+            li(class="garch1")
+              input(type="text", name='ticker1', placeholder=":ticker")
+            li(class="garch1")
+              div.separator
+            li(class="garch1")
+              input(type="text", name='calStart1', placeholder=":calibration start (yyyy-mm-dd)")
+            li(class="garch1")
+              input(type="text", name='calEnd1', placeholder=":calibration end (yyyy-mm-dd)")
+            li(class="garch1")
+              div.separator
+            li(class="garch1")
+              input(type="text", name='backStart1', placeholder=":backtest start (yyyy-mm-dd)")
+            li(class="garch1")
+              input(type="text", name='backEnd1', placeholder=":backtest end (yyyy-mm-dd)")
+            // GARCH 2 ITEMS
+            li(class="garch2")
+              input(type="text", name='ticker2', placeholder=":tickerasd")
+            li(class="garch2")
+              input(type="text", name='calStart2', placeholder=":start date (yyyy-mm-dd)asd")
+            li(class="garch2")
+              input(type="text", name='calEnd2', placeholder=":heheeheh end date (yyyy-mm-dd)asd")
+            li(class="garch2")
+              input(type="text", name='backStart2', placeholder=": start date (yyyy-mm-dd)asd")
+            li(class="garch2")
+              input(type="text", name='backEnd2', placeholder=":end date (yyyy-mm-dd)asd")
+            // GARCH 3 ITEMS
+            li(class="garch3")
+              input(type="text", name='test', placeholder=":ticker")
+            li(class="garch3")
+              input(type="text", name='test1', placeholder=":start date (yyyy-mm-dd)")
+            li(class="garch3")
+              input(type="text", name='test2', placeholder=":end date (yyyy-mm-dd)")
+            li
+              button(class="btn btn-1 btn-1a", id='calculate') Calculate
+
         div.loading
           img(id='loading-image', src='images/ajax-loader.gif', alt='Loading...')
         div.popup
@@ -39,3 +74,5 @@ html
 
     script(src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js').
     script(src='/javascripts/script.js').
+    script(src='/javascripts/pagechange.js').
+

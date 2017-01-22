@@ -13,15 +13,13 @@ router.post('/python', function(req, res){
   		mode: 'text',
   		pythonOptions: ['-u'],
   		scriptPath: './python/quant/garch/',
-  		args: [req.body.t, req.body.s, req.body.e]
+  		args: [req.body.t, req.body.s, req.body.e, req.body.bs, req.body.be, req.body.method]
 	};
  
 	PythonShell.run('garch.py', options, function (err, results) {
-  		if (err) throw err;
-  		console.log('results: %j', results);
-  		console.log(results[1]);
-
-  		res.send(results);
+      console.log(err);
+  		if (err) res.send(['Something went wrong.', 'dummyVal']);
+      else res.send(results);
 	});
 });
 

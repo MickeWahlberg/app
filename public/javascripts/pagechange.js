@@ -18,7 +18,7 @@ $( ".btnList" ).click(function(e) {
 	$('.btnList').not(this).removeClass('active');
     $(this).toggleClass('active');
     e.preventDefault();
-    $( ".popup" ).hide();
+
 
 
 	if(this.id == 'test1') {
@@ -28,6 +28,12 @@ $( ".btnList" ).click(function(e) {
 	} else{
 		showGarch3("show")
 	};
+
+    if(currentMethod == lastRun) {
+        $( ".popup" ).show();
+    } else{
+    	$( ".popup" ).hide();
+    }
 });
 
 function showGarch1(pace) {

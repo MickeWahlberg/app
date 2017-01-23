@@ -145,9 +145,7 @@ def varPlot(timeSeries,var, garch, filePath):
 		arr2 = np.asarray(garch)
 		arr3 = np.asarray(var)
 		plt.bar(range(len(arr)), arr)
-		plt.hold(True)
 		plt.plot(arr2)
-		plt.hold(True)
 		plt.plot(arr3)
 		plt.savefig(filePath)
 	except Exception as e:

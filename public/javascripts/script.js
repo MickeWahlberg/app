@@ -81,6 +81,7 @@ function callbackFunc(response) {
 		$( ".popup img" ).attr('src', responseMessage);
 		$( ".popup img" ).show();
     	$( ".popup p" ).hide();	
+	lastRun = currentMethod;
 	};
 	$('.loading').hide();    
 };

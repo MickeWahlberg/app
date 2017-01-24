@@ -6,17 +6,20 @@ var text1 = "Calibrate the Garch parameters and plot how the volatility model wo
 var text2 = "Compare 1000 day historical Value at Risk(VaR) against Garch. To see what method is preferable, look how often VaR/Garch is breached by the negative return bars"
 var text3 = "Make a daily Garch forecast. This is forcasted with the assumption of normally distributed returns. Note that each run will generate different results."
 var currentMethod = "";
+var currentLocation = window.location;
+var pageName = (currentLocation.pathname).toString().replace('/','');
+
 
 $(document).ready(function() {
-	$('.btnList').not("#test1").removeClass('active');
-    $("#test1").toggleClass('active');
+	$('.btnList').not("#test1").removeClass(pageName + 'active');
+	//setActiveColor()
+    $("#test1").toggleClass(pageName + 'active');
     showGarch1("slow")
     currentMethod = "garch1"
 });
 
 $( ".btnList" ).click(function(e) {
-	$('.btnList').not(this).removeClass('active');
-    $(this).toggleClass('active');
+	setActiveColor(this)
     e.preventDefault();
 
 
@@ -26,7 +29,7 @@ $( ".btnList" ).click(function(e) {
 	} else if (this.id == 'test2') {
 		showGarch2("slow")
 	} else{
-		showGarch3("show")
+		showGarch3("slow")
 	};
 
     if(currentMethod == lastRun) {
@@ -35,6 +38,11 @@ $( ".btnList" ).click(function(e) {
     	$( ".popup" ).hide();
     }
 });
+
+function setActiveColor(button){
+	$('.btnList').not(button).removeClass(pageName+'active');
+    $(button).toggleClass(pageName+'active');
+}
 
 function showGarch1(pace) {
 	$( ".garch1" ).hide()

@@ -164,12 +164,31 @@
 .btn-1a:hover,
 .btn-1a:active {
 	background: #22AD5C;
-	border: 3px solid #146636
+	border: 3px solid #146636;
 }
 
-.btn-1a:active, .active {
+.btn-1a:active, .garchactive {
     background: #22AD5C;
-    border: 3px solid #146636
+    border: 3px solid #146636;
+}
+
+
+
+.markowitz {
+	border: 3px solid #B24B25;
+	color: #fff;
+	background: #FF703D;
+}
+
+.markowitz-1a:hover,
+.markowitz-1a:active {
+	background: #C15128;
+	border: 3px solid #87381C;
+}
+
+.markowitz-1a:active, .markowitzactive {
+    background: #C15128;
+    border: 3px solid #87381C;
 }
 
 /* Button 1b */

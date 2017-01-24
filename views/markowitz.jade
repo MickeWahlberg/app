@@ -15,11 +15,11 @@ html
         div.jumbotron
           ul(class="input-list style-1 clearfix")
             li
-              h1 Garch
+              h1 Markowitz Portfolio Optimization
             li
-              button(class="btnlist btn-1 btn-1a", id='test1', class='btnList') Backtest Garch
-              button(class="btnlist btn-1 btn-1a", id='test2', class='btnList') Garch/VaR
-              button(class="btnlist btn-1 btn-1a", id='test3', class='btnList') Forecast Garch
+              button(class="btnlist markowitz markowitz-1a", id='test1', class='btnList') Sharpe.
+              button(class="btnlist markowitz markowitz-1a", id='test2', class='btnList') Minimum variance
+              button(class="btnlist markowitz markowitz-1a", id='test3', class='btnList') Backtest
             li
               div.description
                 p The generalized autoregressive conditional heteroskedasticity (GARCH) process is an econometric term that describes an approach to estimate volatility in financial markets. The GARCH process is often preferred by financial modeling professionals because it provides a more real-world context than other forms when trying to predict the prices and rates of financial instruments.
@@ -66,7 +66,7 @@ html
               li(class="garch3")
                 input(type="text", name='forecastDays', placeholder=":number of days to forecast")
               li
-                button(class="btn btn-1 btn-1a", id='calculate') Calculate
+                button(class="btn markowitz markowitz-1a", id='calculate') Calculate
 
           div.loading
             img(id='loading-image', src='images/ajax-loader.gif', alt='Loading...')

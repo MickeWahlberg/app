@@ -10,6 +10,7 @@ var index = require('./routes/index');
 var test = require('./routes/test');
 var users = require('./routes/users');
 var garch = require('./routes/garch');
+var markowitz = require('./routes/markowitz');
 
 var app = express();
 locale = require("locale");
@@ -32,6 +33,7 @@ app.use('/', index);
 app.use('/test', test);
 app.use('/users', users);
 app.use('/garch', garch);
+app.use('/markowitz', markowitz);
 
 // Stormpath will let you know when it's ready to start authenticating users.
 //app.on('stormpath.ready', function () {

@@ -1,31 +1,38 @@
+import numpy as np
+from numpy.linalg import inv
+
 stocks = MarketData(:,1:10)
 # Returns
-y = stocks(2:end, :)./stocks(1:(end-1), :)
+y = np.divide(stocks[1:,:], stocks[:-1,:])
+#y = stocks[2:end, :]./stocks(1:(end-1), :)
+
 V0SS = 100
 V0NSS = 100
 V0Equal = 100
 V0Sharpe = 100
-l = length(y)
-weightsSS = zeros(10, l-101)
-weightsNSS = zeros(10, l-101)
+l = len(y)
+weightsSS = np.zeros((10, l-101))
+weightsNSS = np.zeros((10, l-101))
 m0 = 1.0025
-portfolio = zeros(4, 898)
-exitFlags = zeros(1, 898)
-for t = 101:l
+portfolio = np.zeros((4, 898))
+exitFlags = zeros((1, 898))
+
+for t in range(100:l):
+#for t = 101:l
 
  column = t - 100
  # Returns
- m = mean(y(t-100:t-1,:))
+ m = np.mean(y[t-101:t-1,:])
  # Portfolio covariance, variance, and volatility
- portfolioCov = cov(y(t-100:t-1,:))
- portfolioVariance = diag(portfolioCov)
- portfolioVolatility = sqrt(portfolioVariance)
+ portfolioCov = np.cov(y[t-101:t-1,:])
+ portfolioVariance = np.diag(portfolioCov)
+ portfolioVolatility = np.sqrt(portfolioVariance)
  #Estimate parameters
- s = length(portfolioCov)
- I = ones(s,1)
+ s = len(portfolioCov)
+ I = np.ones((s,1))
  # For same dimensions as in notes
- m = m'
- A = I' / portfolioCov * I
+ m = np.transpose(m)
+ A = np.multiply(np.multiply(np.transpose(I), inv(portfolioCov)),  I)
  B = I' / portfolioCov * m
  C = m' / portfolioCov * m
  D = A * C - B^2
